@@ -30,6 +30,16 @@ export function GameBoardView({ gameState, player, submitMove, resetGame }: Game
           </div>
         </div>
 
+        <div
+          onClick={() => {
+            navigator.clipboard.writeText(gameState.roomId);
+            alert('Room ID copied to clipboard!');
+          }}
+          className="cursor-pointer mx-auto w-max px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-mono text-slate-400 hover:text-white hover:bg-white/10 transition-all text-center tracking-widest shadow-sm active:scale-95"
+        >
+          ROOM CODE: <span className="text-indigo-400 font-bold">{gameState.roomId}</span>
+        </div>
+
         <div className="grid grid-cols-3 gap-4 w-full p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,0,0,0.5)]">
           {gameState.board.map((cell, index) => {
             const isClickable = gameState.status === 'PLAYING' && !isGameOver && isMyTurn && cell === null;
