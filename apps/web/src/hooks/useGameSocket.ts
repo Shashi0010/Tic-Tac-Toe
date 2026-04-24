@@ -3,9 +3,12 @@ import { io } from 'socket.io-client';
 import type { GameState, Player, PlayerSymbol } from '@tic-tac-toe/shared';
 
 // 1. Move socket OUTSIDE the hook. It connects exactly once.
-const socket = io('http://localhost:3001', {
-  transports: ['websocket'],
-  autoConnect: true
+const serverUrl = import.meta.env.PROD
+  ? 'https://tic-tac-toe-server-3dd0.onrender.com'
+  : 'http://localhost:3001';
+
+const socket = io(serverUrl, {
+  transports: ['websocket', 'polling'],
 });
 
 export function useGameSocket() {
