@@ -17,7 +17,6 @@ export class RoomManager {
       id: crypto.randomUUID(),
       name,
       symbol,
-      status: 'IDLE' as any,
     };
     this.playersBySocketId.set(socketId, player);
     return player;
