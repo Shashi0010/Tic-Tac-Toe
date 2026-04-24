@@ -1,0 +1,8 @@
+{
+  "name": "tic-tac-toe-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

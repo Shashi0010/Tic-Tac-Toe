@@ -1,0 +1,35 @@
+# Root Cause Analysis (RCA) Report
+
+## Incident Overview
+**Status:** Resolved
+**Impact:** Fatal Frontend Crash (White Screen of Death) and WebSocket connection failures.
+
+## Root Causes
+
+### 1. Frontend Import Errors (Fatal Crash)
+- **Cause:** The `LobbyView.tsx` component used incorrect relative paths for imports (e.g., `../../hooks/useGameSocket` instead of `../hooks/useGameSocket`).
+- **Cause:** Duplicated declaration of the `LobbyView` component within `apps/web/src/components/LobbyView.tsx`.
+- **Outcome:** Vite's import analysis failed, preventing the application from bundling and causing a fatal crash.
+
+### 2. Frontend State Instability (White Screen of Death)
+- **Cause:** Lack of defensive programming in `GameBoardView.tsx`. The component attempted to access properties of `gameState` and `player` immediately upon rendering, even when they were `null` (e.g., during the transition between the Lobby and the Game Board).
+- **Outcome:** React attempted to read properties of `null`, throwing a runtime exception and triggering the "White Screen of Death."
+
+### 3. Backend Connection Issues (Potential Instability)
+- **Cause:** The Socket.io server in `apps/server/src/index.ts` used a wildcard origin (`*`) for CORS. While this works for simple tests, it is insecure and can lead to issues in more strictly configured environments.
+- **Outcome:** While not the primary cause of the crash, it represents a lack of production-ready configuration.
+
+## Resolution Steps
+
+### Backend Fixes
+- **CORS Configuration:** Updated `apps/server/src/index.ts` to explicitly allow `http://localhost:5173` with allowed methods `GET` and `POST`.
+
+### Frontend Fixes
+- **Corrected Imports:** Updated `apps/web/src/components/LobbyView.tsx` to use the correct relative path for the `useGameSocket` hook.
+- **Removed Duplication:** Cleaned up the redundant `LobbyView` declaration in `apps/web/src/components/LobbyView.tsx`.
+- **Defensive Programming:** Added null-safety checks in `apps/web/src/components/GameBoardView.tsx`. The component now renders a "Connecting to game session..." fallback if `gameState` or `player` is missing.
+
+## Verification
+- Verified that Vite build/dev server starts without import errors.
+- Verified that the application loads the LobbyView.
+- Verified that the application handles the loading state gracefully without crashing.
