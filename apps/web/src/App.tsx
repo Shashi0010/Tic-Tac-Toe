@@ -1,4 +1,3 @@
-import React from 'react';
 import { LobbyView } from './components/LobbyView';
 import { GameBoardView } from './components/GameBoardView';
 import { useGameSocket } from './hooks/useGameSocket';

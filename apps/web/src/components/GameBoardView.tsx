@@ -1,4 +1,3 @@
-import React from 'react';
 import { type GameState } from '@tic-tac-toe/shared';
 
 interface GameBoardViewProps {
@@ -22,11 +21,11 @@ export function GameBoardView({ gameState, player, submitMove, resetGame }: Game
 
         <div className="flex justify-between w-full px-2 mb-2 tracking-widest uppercase text-xs font-bold">
           <div className={`flex flex-col items-start ${gameState.currentTurnPlayerId === playerX?.id ? 'animate-pulse-glow text-rose-400 drop-shadow-[0_0_10px_rgba(244,63,94,0.6)]' : 'text-slate-500'}`}>
-            <span>{playerX ? playerX.name : 'Waiting...'} <span className="ml-2 px-2 py-1 bg-black/10 dark:bg-white/10 rounded-md font-mono text-sm">Score: {gameState.scores?.[playerX?.id] || 0}</span></span>
+            <span>{playerX ? playerX.name : 'Waiting...'} <span className="ml-2 px-2 py-1 bg-black/10 dark:bg-white/10 rounded-md font-mono text-sm">Score: {gameState.scores?.[playerX?.id || ''] || 0}</span></span>
             <span className="text-2xl">X</span>
           </div>
           <div className={`flex flex-col items-end ${gameState.currentTurnPlayerId === playerO?.id ? 'animate-pulse-glow text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]' : 'text-slate-500'}`}>
-            <span>{playerO ? playerO.name : 'Waiting...'} <span className="ml-2 px-2 py-1 bg-black/10 dark:bg-white/10 rounded-md font-mono text-sm">Score: {gameState.scores?.[playerO?.id] || 0}</span></span>
+            <span>{playerO ? playerO.name : 'Waiting...'} <span className="ml-2 px-2 py-1 bg-black/10 dark:bg-white/10 rounded-md font-mono text-sm">Score: {gameState.scores?.[playerO?.id || ''] || 0}</span></span>
             <span className="text-2xl">O</span>
           </div>
         </div>
