@@ -8,7 +8,7 @@ const serverUrl = import.meta.env.PROD
   : 'http://localhost:3001';
 
 const socket = io(serverUrl, {
-  transports: ['websocket', 'polling'],
+  transports: ['websocket'],
 });
 
 export function useGameSocket() {
